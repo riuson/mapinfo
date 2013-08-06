@@ -17,34 +17,17 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "mapscontroller.h"
+#include "maps.h"
 
-#include <QMainWindow>
-
-namespace Ui {
-class MainWindow;
+MapsController::MapsController(Maps *maps, QObject *parent) :
+    QObject(parent)
+{
+    this->mMaps = maps;
 }
 
-class Maps;
-class MapsController;
-
-class MainWindow : public QMainWindow
+void MapsController::init()
 {
-    Q_OBJECT
-
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
-
-private:
-    Ui::MainWindow *ui;
-
-    Maps *mMaps;
-    MapsController *mController;
-
-private slots:
-    void on_image_changed(const QImage *image);
-};
-
-#endif // MAINWINDOW_H
+    const QImage *image = this->mMaps->mainMap();
+    emit this->imageChanged(image);
+}

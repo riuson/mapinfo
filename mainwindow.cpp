@@ -20,6 +20,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "maps.h"
+#include "mapscontroller.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,6 +29,11 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 
     this->mMaps = new Maps(this);
+    this->mController = new MapsController(this->mMaps, this);
+
+    this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(on_image_changed(const QImage*)));
+
+    this->mController->init();
 }
 
 MainWindow::~MainWindow()
@@ -35,4 +41,14 @@ MainWindow::~MainWindow()
     delete ui;
 
     delete this->mMaps;
+}
+
+void MainWindow::on_image_changed(const QImage *image)
+{
+    QPixmap pixmap = QPixmap::fromImage(*image);
+    int w = 600;//this->ui->labelImageView->width();
+    int h = 500;//this->ui->labelImageView->height();
+    pixmap = pixmap.scaled(w, h, Qt::KeepAspectRatio);
+
+    this->ui->labelImageView->setPixmap(pixmap);
 }

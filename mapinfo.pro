@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     mapsloader.cpp \
     maps.cpp \
-    mapitem.cpp
+    mapitem.cpp \
+    mapscontroller.cpp
 
 HEADERS  += mainwindow.h \
     mapsloader.h \
     maps.h \
-    mapitem.h
+    mapitem.h \
+    mapscontroller.h
 
 FORMS    += mainwindow.ui
