@@ -17,36 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#include "scaledlabel.h"
+#include <QDebug>
+#include <QPainter>
 
-#include <QMainWindow>
-
-namespace Ui {
-class MainWindow;
+ScaledLabel::ScaledLabel(QWidget *parent) :
+    QWidget(parent)
+{
+    this->mImage = QImage();
+    this->mPixmap = QPixmap();
 }
 
-class Maps;
-class MapsController;
-class ScaledLabel;
-
-class MainWindow : public QMainWindow
+void ScaledLabel::setImage(const QImage *image)
 {
-    Q_OBJECT
+    this->mImage = QImage(*image);
+}
 
-public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+void ScaledLabel::resizeEvent(QResizeEvent *)
+{
+    QPixmap pixmap = QPixmap::fromImage(this->mImage);
+    pixmap = pixmap.scaled(this->size(), Qt::KeepAspectRatio);
+    this->mPixmap = pixmap;
+    qDebug() << pixmap.width();
+}
 
-private:
-    Ui::MainWindow *ui;
-
-    Maps *mMaps;
-    MapsController *mController;
-    ScaledLabel *mLabelView;
-
-private slots:
-    void on_image_changed(const QImage *image);
-};
-
-#endif // MAINWINDOW_H
+void ScaledLabel::paintEvent(QPaintEvent *)
+{
+    QPainter painter(this);
+    painter.drawPixmap(0, 0, this->mPixmap);
+    painter.end();
+}

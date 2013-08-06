@@ -17,12 +17,14 @@ SOURCES += main.cpp\
     mapsloader.cpp \
     maps.cpp \
     mapitem.cpp \
-    mapscontroller.cpp
+    mapscontroller.cpp \
+    scaledlabel.cpp
 
 HEADERS  += mainwindow.h \
     mapsloader.h \
     maps.h \
     mapitem.h \
-    mapscontroller.h
+    mapscontroller.h \
+    scaledlabel.h
 
 FORMS    += mainwindow.ui

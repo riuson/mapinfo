@@ -21,12 +21,17 @@
 #include "ui_mainwindow.h"
 #include "maps.h"
 #include "mapscontroller.h"
+#include "scaledlabel.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    this->mLabelView = new ScaledLabel(this);
+    this->mLabelView->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    this->ui->frameImageContainer->layout()->addWidget(this->mLabelView);
 
     this->mMaps = new Maps(this);
     this->mController = new MapsController(this->mMaps, this);
@@ -40,15 +45,12 @@ MainWindow::~MainWindow()
 {
     delete ui;
 
+    delete this->mLabelView;
+
     delete this->mMaps;
 }
 
 void MainWindow::on_image_changed(const QImage *image)
 {
-    QPixmap pixmap = QPixmap::fromImage(*image);
-    int w = 600;//this->ui->labelImageView->width();
-    int h = 500;//this->ui->labelImageView->height();
-    pixmap = pixmap.scaled(w, h, Qt::KeepAspectRatio);
-
-    this->ui->labelImageView->setPixmap(pixmap);
+    this->mLabelView->setImage(image);
 }

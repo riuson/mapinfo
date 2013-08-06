@@ -17,36 +17,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef SCALEDLABEL_H
+#define SCALEDLABEL_H
 
-#include <QMainWindow>
+#include <QWidget>
+#include <QImage>
+#include <QPixmap>
 
-namespace Ui {
-class MainWindow;
-}
-
-class Maps;
-class MapsController;
-class ScaledLabel;
-
-class MainWindow : public QMainWindow
+class ScaledLabel : public QWidget
 {
     Q_OBJECT
-
 public:
-    explicit MainWindow(QWidget *parent = 0);
-    ~MainWindow();
+    explicit ScaledLabel(QWidget *parent = 0);
+
+    void setImage(const QImage *image);
+
+protected:
+    void resizeEvent(QResizeEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 private:
-    Ui::MainWindow *ui;
+    QImage mImage;
+    QPixmap mPixmap;
 
-    Maps *mMaps;
-    MapsController *mController;
-    ScaledLabel *mLabelView;
+signals:
 
-private slots:
-    void on_image_changed(const QImage *image);
+public slots:
+
 };
 
-#endif // MAINWINDOW_H
+#endif // SCALEDLABEL_H
