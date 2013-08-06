@@ -60,3 +60,20 @@ const QImage *Maps::mainMap() const
 {
     return this->mMainMap;
 }
+
+int Maps::indexByPoint(int x, int y) const
+{
+    int result = -1;
+
+    for (int i = 0; i < this->mItems->length(); i++)
+    {
+        MapItem *item = this->mItems->at(i);
+        if (item->contains(x, y))
+        {
+            result = i;
+            break;
+        }
+    }
+
+    return result;
+}

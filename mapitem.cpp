@@ -20,6 +20,7 @@
 #include "mapitem.h"
 #include <QFile>
 #include <QTextStream>
+#include <QRgb>
 
 MapItem::MapItem(QObject *parent) :
     QObject(parent)
@@ -61,4 +62,21 @@ const QImage &MapItem::masked() const
 const QString &MapItem::info() const
 {
     return this->mInfo;
+}
+
+bool MapItem::contains(int x, int y) const
+{
+    bool result = false;
+
+    if (this->mMask.rect().contains(x, y))
+    {
+        QRgb pixelColor = this->mMask.pixel(x, y);
+        // if transparent
+        if (qAlpha(pixelColor) == 0)
+        {
+            result = true;
+        }
+    }
+
+    return result;
 }

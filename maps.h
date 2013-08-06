@@ -37,6 +37,7 @@ public:
     int itemsCount() const;
 
     const QImage *mainMap() const;
+    int indexByPoint(int x, int y) const;
 
 private:
     QList<MapItem *> *mItems;

@@ -31,3 +31,8 @@ void MapsController::init()
     const QImage *image = this->mMaps->mainMap();
     emit this->imageChanged(image);
 }
+
+void MapsController::mouseMoving(int x, int y)
+{
+    int index = this->mMaps->indexByPoint(x, y);
+}

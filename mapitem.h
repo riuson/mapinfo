@@ -37,6 +37,8 @@ public:
     const QImage & masked() const;
     const QString & info() const;
 
+    bool contains(int x, int y) const;
+
 private:
     QImage mMask;
     QImage mMasked;

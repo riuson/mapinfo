@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->mController = new MapsController(this->mMaps, this);
 
     this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(on_image_changed(const QImage*)));
+    QObject::connect(this->mLabelView, SIGNAL(mouseMoved(int,int)), this->mController, SLOT(mouseMoving(int,int)));
 
     this->mController->init();
 }

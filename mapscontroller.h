@@ -39,6 +39,7 @@ signals:
     void infoChanged(const QString *info);
 
 public slots:
+    void mouseMoving(int x, int y);
 
 };
 
