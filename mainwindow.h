@@ -47,6 +47,7 @@ private:
 
 private slots:
     void imageChanged(const QImage *image);
+    void infoChanged(const QString &info);
 };
 
 #endif // MAINWINDOW_H

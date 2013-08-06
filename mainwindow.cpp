@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->mController = new MapsController(this->mMaps, this);
 
     this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(imageChanged(const QImage*)));
+    this->connect(this->mController, SIGNAL(infoChanged(const QString&)), SLOT(infoChanged(const QString&)));
     QObject::connect(this->mLabelView, SIGNAL(mouseMoved(int,int)), this->mController, SLOT(mouseMoving(int,int)));
 
     this->mController->init();
@@ -54,4 +55,9 @@ MainWindow::~MainWindow()
 void MainWindow::imageChanged(const QImage *image)
 {
     this->mLabelView->setImage(image);
+}
+
+void MainWindow::infoChanged(const QString &info)
+{
+    this->ui->textBrowserInfo->setText(info);
 }

@@ -37,7 +37,7 @@ private:
 
 signals:
     void imageChanged(const QImage *image);
-    void infoChanged(const QString *info);
+    void infoChanged(const QString &info);
 
 public slots:
     void mouseMoving(int x, int y);

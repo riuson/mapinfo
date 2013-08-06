@@ -42,14 +42,16 @@ void MapsController::mouseMoving(int x, int y)
         this->mLastIndex = index;
 
         const QImage *imageMap = this->mMaps->mainMap();
+        QString info;
 
         if (index >= 0)
         {
             const MapItem *item = this->mMaps->item(index);
-            const QImage *imageMasked = item->masked();
-            imageMap = imageMasked;
+            imageMap = item->masked();
+            info = *item->info();
         }
 
         emit this->imageChanged(imageMap);
+        emit this->infoChanged(info);
     }
 }
