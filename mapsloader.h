@@ -17,17 +17,19 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "mainwindow.h"
-#include <QApplication>
+#ifndef MAPSLOADER_H
+#define MAPSLOADER_H
 
-int main(int argc, char *argv[])
+#include <QObject>
+#include <QList>
+
+class MapItem;
+
+class MapsLoader : public QObject
 {
-    QCoreApplication::setApplicationName("mapinfo");
-    QCoreApplication::setOrganizationName("riuson");
-    QApplication a(argc, argv);
-    a.addLibraryPath(QApplication::applicationDirPath());
-    a.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+    Q_OBJECT
+public:
+    static void load(QObject *parent, QList <MapItem *> *items);
+};
+
+#endif // MAPSLOADER_H

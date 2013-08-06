@@ -17,17 +17,30 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "mainwindow.h"
-#include <QApplication>
+#ifndef MAPITEM_H
+#define MAPITEM_H
 
-int main(int argc, char *argv[])
+#include <QObject>
+#include <QImage>
+#include <QString>
+
+class MapItem : public QObject
 {
-    QCoreApplication::setApplicationName("mapinfo");
-    QCoreApplication::setOrganizationName("riuson");
-    QApplication a(argc, argv);
-    a.addLibraryPath(QApplication::applicationDirPath());
-    a.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+    Q_OBJECT
+public:
+    explicit MapItem(QObject *parent = 0);
+    ~MapItem();
+
+    bool loadFiles(const QString &mask, const QString &masked, const QString &info);
+
+    const QImage & mask() const;
+    const QImage & masked() const;
+    const QString & info() const;
+
+private:
+    QImage mMask;
+    QImage mMasked;
+    QString mInfo;
+};
+
+#endif // MAPITEM_H

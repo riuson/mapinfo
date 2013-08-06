@@ -17,17 +17,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "mainwindow.h"
-#include <QApplication>
+#ifndef MAPS_H
+#define MAPS_H
 
-int main(int argc, char *argv[])
+#include <QObject>
+#include <QList>
+
+class MapItem;
+
+class Maps : public QObject
 {
-    QCoreApplication::setApplicationName("mapinfo");
-    QCoreApplication::setOrganizationName("riuson");
-    QApplication a(argc, argv);
-    a.addLibraryPath(QApplication::applicationDirPath());
-    a.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-    MainWindow w;
-    w.show();
-    return a.exec();
-}
+    Q_OBJECT
+public:
+    explicit Maps(QObject *parent = 0);
+    ~Maps();
+
+private:
+    QList<MapItem *> *mItems;
+};
+
+#endif // MAPS_H

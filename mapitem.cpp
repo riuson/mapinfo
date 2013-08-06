@@ -17,17 +17,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "mainwindow.h"
-#include <QApplication>
+#include "mapitem.h"
+#include <QFile>
+#include <QTextStream>
 
-int main(int argc, char *argv[])
+MapItem::MapItem(QObject *parent) :
+    QObject(parent)
 {
-    QCoreApplication::setApplicationName("mapinfo");
-    QCoreApplication::setOrganizationName("riuson");
-    QApplication a(argc, argv);
-    a.addLibraryPath(QApplication::applicationDirPath());
-    a.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-    MainWindow w;
-    w.show();
-    return a.exec();
+}
+
+MapItem::~MapItem()
+{
+}
+
+bool MapItem::loadFiles(const QString &mask, const QString &masked, const QString &info)
+{
+    bool result = false;
+
+    QFile file(info);
+    if (file.open(QIODevice::ReadOnly))
+    {
+        QTextStream stream(&file);
+        this->mInfo = stream.readAll();
+        file.close();
+
+        result = this->mMask.load(mask);
+        result &= this->mMasked.load(masked);
+    }
+
+    return result;
+}
+
+const QImage &MapItem::mask() const
+{
+    return this->mMask;
+}
+
+const QImage &MapItem::masked() const
+{
+    return this->mMasked;
+}
+
+const QString &MapItem::info() const
+{
+    return this->mInfo;
 }

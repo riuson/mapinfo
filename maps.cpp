@@ -17,17 +17,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/
  */
 
-#include "mainwindow.h"
-#include <QApplication>
+#include "maps.h"
+#include "mapitem.h"
+#include "mapsloader.h"
+#include <QDebug>
 
-int main(int argc, char *argv[])
+Maps::Maps(QObject *parent) :
+    QObject(parent)
 {
-    QCoreApplication::setApplicationName("mapinfo");
-    QCoreApplication::setOrganizationName("riuson");
-    QApplication a(argc, argv);
-    a.addLibraryPath(QApplication::applicationDirPath());
-    a.addLibraryPath(QApplication::applicationDirPath() + "/plugins");
-    MainWindow w;
-    w.show();
-    return a.exec();
+    this->mItems = new QList<MapItem *>();
+
+    MapsLoader loader;
+    loader.load(this, this->mItems);
+    qDebug() << this->mItems->length();
+}
+
+Maps::~Maps()
+{
+    qDeleteAll(*this->mItems);
+    this->mItems->clear();
+    delete this->mItems;
 }
