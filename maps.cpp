@@ -26,9 +26,10 @@ Maps::Maps(QObject *parent) :
     QObject(parent)
 {
     this->mItems = new QList<MapItem *>();
+    this->mMainMap = new QImage();
 
     MapsLoader loader;
-    loader.load(this, this->mItems);
+    loader.load(this, this->mMainMap, this->mItems);
     qDebug() << this->mItems->length();
 }
 
@@ -37,4 +38,6 @@ Maps::~Maps()
     qDeleteAll(*this->mItems);
     this->mItems->clear();
     delete this->mItems;
+
+    delete this->mMainMap;
 }

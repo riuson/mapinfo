@@ -29,7 +29,7 @@ class MapsLoader : public QObject
 {
     Q_OBJECT
 public:
-    static void load(QObject *parent, QList <MapItem *> *items);
+    static void load(QObject *parent, QImage *mainMap, QList <MapItem *> *items);
 };
 
 #endif // MAPSLOADER_H

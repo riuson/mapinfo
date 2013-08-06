@@ -24,12 +24,15 @@
 #include <QFileInfo>
 #include "mapitem.h"
 
-void MapsLoader::load(QObject *parent, QList<MapItem *> *items)
+void MapsLoader::load(QObject *parent, QImage *mainMap, QList<MapItem *> *items)
 {
     QDir appDir = QDir(QApplication::applicationDirPath());
 
     QDir mapDir = appDir;
     mapDir.cd("map");
+
+    QFileInfo fileMainMap = QFileInfo(mapDir.absoluteFilePath("main.png"));
+    mainMap->load(fileMainMap.absoluteFilePath());
 
     QFileInfoList subdirs = mapDir.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot, QDir::Name);
 

@@ -24,6 +24,7 @@
 #include <QList>
 
 class MapItem;
+class QImage;
 
 class Maps : public QObject
 {
@@ -34,6 +35,7 @@ public:
 
 private:
     QList<MapItem *> *mItems;
+    QImage *mMainMap;
 };
 
 #endif // MAPS_H
