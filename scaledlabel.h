@@ -36,6 +36,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private:
     QImage mImage;
@@ -46,6 +47,7 @@ private:
 
 signals:
     void mouseMoved(int x, int y);
+    void mouseReleased(int x, int y);
     void mouseExit();
 
 public slots:

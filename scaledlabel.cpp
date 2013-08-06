@@ -70,6 +70,23 @@ void ScaledLabel::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
+void ScaledLabel::mouseReleaseEvent(QMouseEvent *event)
+{
+    if (this->rect().contains(event->pos()))
+    {
+        int x = event->x();
+        int y = event->y();
+
+        x = ((float)x) * this->mScaleFactor;
+        y = ((float)y) * this->mScaleFactor;
+
+        if (this->mImage.rect().contains(x, y))
+        {
+            emit this->mouseReleased(x, y);
+        }
+    }
+}
+
 void ScaledLabel::updatePixmap()
 {
     QPixmap pixmap = QPixmap::fromImage(this->mImage);
