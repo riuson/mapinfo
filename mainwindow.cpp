@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->mMaps = new Maps(this);
     this->mController = new MapsController(this->mMaps, this);
 
-    this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(on_image_changed(const QImage*)));
+    this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(imageChanged(const QImage*)));
     QObject::connect(this->mLabelView, SIGNAL(mouseMoved(int,int)), this->mController, SLOT(mouseMoving(int,int)));
 
     this->mController->init();
@@ -51,7 +51,7 @@ MainWindow::~MainWindow()
     delete this->mMaps;
 }
 
-void MainWindow::on_image_changed(const QImage *image)
+void MainWindow::imageChanged(const QImage *image)
 {
     this->mLabelView->setImage(image);
 }

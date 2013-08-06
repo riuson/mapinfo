@@ -42,6 +42,8 @@ private:
     QPixmap mPixmap;
     float mScaleFactor;
 
+    void updatePixmap();
+
 signals:
     void mouseMoved(int x, int y);
     void mouseExit();

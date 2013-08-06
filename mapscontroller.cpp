@@ -19,11 +19,13 @@
 
 #include "mapscontroller.h"
 #include "maps.h"
+#include "mapitem.h"
 
 MapsController::MapsController(Maps *maps, QObject *parent) :
     QObject(parent)
 {
     this->mMaps = maps;
+    this->mLastIndex = -1;
 }
 
 void MapsController::init()
@@ -35,4 +37,19 @@ void MapsController::init()
 void MapsController::mouseMoving(int x, int y)
 {
     int index = this->mMaps->indexByPoint(x, y);
+    if (index != this->mLastIndex)
+    {
+        this->mLastIndex = index;
+
+        const QImage *imageMap = this->mMaps->mainMap();
+
+        if (index >= 0)
+        {
+            const MapItem *item = this->mMaps->item(index);
+            const QImage *imageMasked = item->masked();
+            imageMap = imageMasked;
+        }
+
+        emit this->imageChanged(imageMap);
+    }
 }

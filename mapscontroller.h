@@ -33,6 +33,7 @@ public:
 
 private:
     Maps *mMaps;
+    int mLastIndex;
 
 signals:
     void imageChanged(const QImage *image);

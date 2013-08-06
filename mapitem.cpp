@@ -49,19 +49,19 @@ bool MapItem::loadFiles(const QString &mask, const QString &masked, const QStrin
     return result;
 }
 
-const QImage &MapItem::mask() const
+const QImage *MapItem::mask() const
 {
-    return this->mMask;
+    return &this->mMask;
 }
 
-const QImage &MapItem::masked() const
+const QImage *MapItem::masked() const
 {
-    return this->mMasked;
+    return &this->mMasked;
 }
 
-const QString &MapItem::info() const
+const QString *MapItem::info() const
 {
-    return this->mInfo;
+    return &this->mInfo;
 }
 
 bool MapItem::contains(int x, int y) const

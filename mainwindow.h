@@ -46,7 +46,7 @@ private:
     ScaledLabel *mLabelView;
 
 private slots:
-    void on_image_changed(const QImage *image);
+    void imageChanged(const QImage *image);
 };
 
 #endif // MAINWINDOW_H

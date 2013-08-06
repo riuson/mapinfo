@@ -33,9 +33,9 @@ public:
 
     bool loadFiles(const QString &mask, const QString &masked, const QString &info);
 
-    const QImage & mask() const;
-    const QImage & masked() const;
-    const QString & info() const;
+    const QImage *mask() const;
+    const QImage *masked() const;
+    const QString *info() const;
 
     bool contains(int x, int y) const;
 

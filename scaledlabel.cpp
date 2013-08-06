@@ -33,14 +33,13 @@ ScaledLabel::ScaledLabel(QWidget *parent) :
 void ScaledLabel::setImage(const QImage *image)
 {
     this->mImage = QImage(*image);
+    this->updatePixmap();
+    this->update();
 }
 
 void ScaledLabel::resizeEvent(QResizeEvent *)
 {
-    QPixmap pixmap = QPixmap::fromImage(this->mImage);
-    pixmap = pixmap.scaled(this->size(), Qt::KeepAspectRatio);
-    this->mPixmap = pixmap;
-    this->mScaleFactor = ((float)this->mImage.width()) / ((float)pixmap.width());
+    this->updatePixmap();
 }
 
 void ScaledLabel::paintEvent(QPaintEvent *)
@@ -69,4 +68,12 @@ void ScaledLabel::mouseMoveEvent(QMouseEvent *event)
             emit this->mouseExit();
         }
     }
+}
+
+void ScaledLabel::updatePixmap()
+{
+    QPixmap pixmap = QPixmap::fromImage(this->mImage);
+    pixmap = pixmap.scaled(this->size(), Qt::KeepAspectRatio);
+    this->mPixmap = pixmap;
+    this->mScaleFactor = ((float)this->mImage.width()) / ((float)pixmap.width());
 }
