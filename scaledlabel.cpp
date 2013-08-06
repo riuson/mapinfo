@@ -18,14 +18,16 @@
  */
 
 #include "scaledlabel.h"
-#include <QDebug>
 #include <QPainter>
+#include <QMouseEvent>
 
 ScaledLabel::ScaledLabel(QWidget *parent) :
     QWidget(parent)
 {
     this->mImage = QImage();
     this->mPixmap = QPixmap();
+    this->mScaleFactor = 1.0f;
+    this->setMouseTracking(true);
 }
 
 void ScaledLabel::setImage(const QImage *image)
@@ -38,7 +40,7 @@ void ScaledLabel::resizeEvent(QResizeEvent *)
     QPixmap pixmap = QPixmap::fromImage(this->mImage);
     pixmap = pixmap.scaled(this->size(), Qt::KeepAspectRatio);
     this->mPixmap = pixmap;
-    qDebug() << pixmap.width();
+    this->mScaleFactor = ((float)this->mImage.width()) / ((float)pixmap.width());
 }
 
 void ScaledLabel::paintEvent(QPaintEvent *)
@@ -46,4 +48,25 @@ void ScaledLabel::paintEvent(QPaintEvent *)
     QPainter painter(this);
     painter.drawPixmap(0, 0, this->mPixmap);
     painter.end();
+}
+
+void ScaledLabel::mouseMoveEvent(QMouseEvent *event)
+{
+    if (this->rect().contains(event->pos()))
+    {
+        int x = event->x();
+        int y = event->y();
+
+        x = ((float)x) * this->mScaleFactor;
+        y = ((float)y) * this->mScaleFactor;
+
+        if (this->mImage.rect().contains(x, y))
+        {
+            emit this->mouseMoved(x, y);
+        }
+        else
+        {
+            emit this->mouseExit();
+        }
+    }
 }

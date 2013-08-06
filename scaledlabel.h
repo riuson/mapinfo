@@ -35,12 +35,16 @@ public:
 protected:
     void resizeEvent(QResizeEvent *event);
     void paintEvent(QPaintEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
 
 private:
     QImage mImage;
     QPixmap mPixmap;
+    float mScaleFactor;
 
 signals:
+    void mouseMoved(int x, int y);
+    void mouseExit();
 
 public slots:
 
