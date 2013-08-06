@@ -33,6 +33,11 @@ public:
     explicit Maps(QObject *parent = 0);
     ~Maps();
 
+    const MapItem *item(int index) const;
+    int itemsCount() const;
+
+    const QImage *mainMap() const;
+
 private:
     QList<MapItem *> *mItems;
     QImage *mMainMap;

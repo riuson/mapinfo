@@ -41,3 +41,22 @@ Maps::~Maps()
 
     delete this->mMainMap;
 }
+
+const MapItem *Maps::item(int index) const
+{
+    if (index < this->mItems->length())
+    {
+        return this->mItems->at(index);
+    }
+    return NULL;
+}
+
+int Maps::itemsCount() const
+{
+    return this->mItems->length();
+}
+
+const QImage *Maps::mainMap() const
+{
+    return this->mMainMap;
+}
