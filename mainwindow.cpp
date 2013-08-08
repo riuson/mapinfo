@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(this->mLabelView, SIGNAL(mouseReleased(int,int)), this->mController, SLOT(mouseReleased(int,int)));
 
     this->mController->init();
+
+    this->ui->frameImageContainer->setGeometry(0, 0, this->ui->centralWidget->width() / 2, 100);
 }
 
 MainWindow::~MainWindow()
