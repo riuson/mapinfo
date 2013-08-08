@@ -26,6 +26,7 @@ MapsController::MapsController(Maps *maps, QObject *parent) :
 {
     this->mMaps = maps;
     this->mLastIndex = -1;
+    this->mFixed = false;
 }
 
 void MapsController::init()
@@ -34,24 +35,53 @@ void MapsController::init()
     emit this->imageChanged(image);
 }
 
+void MapsController::applyMap(int index)
+{
+    const QImage *imageMap = this->mMaps->mainMap();
+    QString info;
+
+    if (index >= 0)
+    {
+        const MapItem *item = this->mMaps->item(index);
+        imageMap = item->masked();
+        info = *item->info();
+    }
+
+    emit this->imageChanged(imageMap);
+    emit this->infoChanged(info);
+}
+
 void MapsController::mouseMoving(int x, int y)
+{
+    if (!this->mFixed)
+    {
+        int index = this->mMaps->indexByPoint(x, y);
+        if (index != this->mLastIndex)
+        {
+            this->mLastIndex = index;
+            this->applyMap(index);
+        }
+    }
+}
+
+void MapsController::mouseReleased(int x, int y)
 {
     int index = this->mMaps->indexByPoint(x, y);
     if (index != this->mLastIndex)
     {
         this->mLastIndex = index;
-
-        const QImage *imageMap = this->mMaps->mainMap();
-        QString info;
-
-        if (index >= 0)
+        this->applyMap(index);
+        this->mFixed = true;
+    }
+    else
+    {
+        if (!this->mFixed)
         {
-            const MapItem *item = this->mMaps->item(index);
-            imageMap = item->masked();
-            info = *item->info();
+            this->mFixed = true;
         }
-
-        emit this->imageChanged(imageMap);
-        emit this->infoChanged(info);
+        else
+        {
+            this->mFixed = false;
+        }
     }
 }

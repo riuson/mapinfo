@@ -39,6 +39,7 @@ MainWindow::MainWindow(QWidget *parent) :
     this->connect(this->mController, SIGNAL(imageChanged(const QImage*)), SLOT(imageChanged(const QImage*)));
     this->connect(this->mController, SIGNAL(infoChanged(const QString&)), SLOT(infoChanged(const QString&)));
     QObject::connect(this->mLabelView, SIGNAL(mouseMoved(int,int)), this->mController, SLOT(mouseMoving(int,int)));
+    QObject::connect(this->mLabelView, SIGNAL(mouseReleased(int,int)), this->mController, SLOT(mouseReleased(int,int)));
 
     this->mController->init();
 }

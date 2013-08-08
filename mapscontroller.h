@@ -34,6 +34,9 @@ public:
 private:
     Maps *mMaps;
     int mLastIndex;
+    bool mFixed;
+
+    void applyMap(int index);
 
 signals:
     void imageChanged(const QImage *image);
@@ -41,7 +44,7 @@ signals:
 
 public slots:
     void mouseMoving(int x, int y);
-
+    void mouseReleased(int x, int y);
 };
 
 #endif // MAPSCONTROLLER_H
