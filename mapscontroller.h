@@ -23,6 +23,7 @@
 #include <QObject>
 
 class Maps;
+class QImage;
 
 class MapsController : public QObject
 {

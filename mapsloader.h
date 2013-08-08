@@ -24,6 +24,7 @@
 #include <QList>
 
 class MapItem;
+class QImage;
 
 class MapsLoader : public QObject
 {
