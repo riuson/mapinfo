@@ -44,18 +44,23 @@ void MapsLoader::load(QObject *parent, QImage *mainMap, QList<MapItem *> *items)
             QDir subdir = QDir(path);
 
             QFileInfo fileMask = QFileInfo(subdir.absoluteFilePath("mask.png"));
-            QFileInfo fileMasked = QFileInfo(subdir.absoluteFilePath("masked.png"));
             QFileInfo fileInfo = QFileInfo(subdir.absoluteFilePath("info.html"));
 
-            if (fileMask.exists() && fileMasked.exists() && fileInfo.exists())
+            if (fileMask.exists() && fileInfo.exists())
             {
                 MapItem *item = new MapItem(parent);
 
-                item->loadFiles(
+                if (item->loadFiles(
                             fileMask.absoluteFilePath(),
-                            fileMasked.absoluteFilePath(),
-                            fileInfo.absoluteFilePath());
-                items->append(item);
+                            fileInfo.absoluteFilePath()) &&
+                    item->setMainMap(mainMap))
+                {
+                    items->append(item);
+                }
+                else
+                {
+                    delete item;
+                }
             }
         }
     }

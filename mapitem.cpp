@@ -21,6 +21,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QRgb>
+#include <QPainter>
 
 MapItem::MapItem(QObject *parent) :
     QObject(parent)
@@ -31,7 +32,7 @@ MapItem::~MapItem()
 {
 }
 
-bool MapItem::loadFiles(const QString &mask, const QString &masked, const QString &info)
+bool MapItem::loadFiles(const QString &mask, const QString &info)
 {
     bool result = false;
 
@@ -43,7 +44,25 @@ bool MapItem::loadFiles(const QString &mask, const QString &masked, const QStrin
         file.close();
 
         result = this->mMask.load(mask);
-        result &= this->mMasked.load(masked);
+    }
+
+    return result;
+}
+
+bool MapItem::setMainMap(const QImage *mainMap)
+{
+    bool result = false;
+
+    QImage resultImage (*mainMap);
+    if (mainMap->size() == this->mMask.size())
+    {
+        QPainter painter(&resultImage);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceOver);
+        painter.drawImage(0, 0, this->mMask);
+        painter.end();
+
+        this->mMasked = QImage(resultImage);
+        result = true;
     }
 
     return result;

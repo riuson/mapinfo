@@ -31,7 +31,8 @@ public:
     explicit MapItem(QObject *parent = 0);
     ~MapItem();
 
-    bool loadFiles(const QString &mask, const QString &masked, const QString &info);
+    bool loadFiles(const QString &mask, const QString &info);
+    bool setMainMap(const QImage *mainMap);
 
     const QImage *mask() const;
     const QImage *masked() const;
