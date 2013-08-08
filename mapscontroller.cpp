@@ -71,11 +71,19 @@ void MapsController::mouseReleased(int x, int y)
     {
         this->mLastIndex = index;
         this->applyMap(index);
-        this->mFixed = true;
+
+        if (index >= 0)
+        {
+            this->mFixed = true;
+        }
+        else
+        {
+            this->mFixed = false;
+        }
     }
     else
     {
-        if (!this->mFixed)
+        if (!this->mFixed && index >= 0)
         {
             this->mFixed = true;
         }
